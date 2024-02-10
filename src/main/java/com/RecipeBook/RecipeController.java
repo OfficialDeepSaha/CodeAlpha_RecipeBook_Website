@@ -71,13 +71,11 @@ public class RecipeController {
 	@PostMapping("/add-recipes")
 	public String saverecipes(@ModelAttribute("recipe") Recipe recipe , @RequestParam MultipartFile img, HttpSession session) throws IOException {
 		
-		recipe.setImageName(img.getOriginalFilename());
-
+		 recipe.setImageName(img.getOriginalFilename());
 		 recipeRepository.save(recipe);
-		 File saveFile = new ClassPathResource("static/img").getFile();
+		 File saveFile = new ClassPathResource("static/img").getFile();                                                               
 		 Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + img.getOriginalFilename());
 		 Files.copy(img.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
 		 session.setAttribute("msg", "Image Upload Sucessfully");
 			return "redirect:/";
 			
